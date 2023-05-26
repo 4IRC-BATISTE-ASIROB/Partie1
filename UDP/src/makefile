@@ -2,7 +2,7 @@
 CC = gcc
 
 # Définir les drapeaux de compilation
-CFLAGS = -Wall
+CFLAGS = -Wall -Wextra
 
 # Définir les chemins
 BIN_DIR = ../bin
