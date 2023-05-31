@@ -80,6 +80,8 @@ int main()
             // Fermer le client
             state = OFF;
         }
+
+        printf("UwU\n");
     }
 
     close(sockfd);
