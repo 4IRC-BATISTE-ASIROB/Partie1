@@ -41,6 +41,21 @@ Voici une description de chaque interaction réseau :
 
 Pour utiliser l'application, vous devez d'abord compiler les deux fichiers. Vous pouvez le faire avec la commande `gcc` comme suit :
 
+## Compilation
+
+Pour compiler les fichiers `client.c` et `server.c` dans le dossier `src`, vous pouvez utiliser le `makefile` fourni.
+
+Voici comment utiliser le makefile :
+
 ```bash
-gcc -o server server.c
-gcc -o client client.c
+cd Partie1/UDP/src
+make
+```
+
+Cette commande compile les fichiers source et place les exécutables dans le répertoire `bin`.
+
+Si vous souhaitez nettoyer les fichiers exécutables, utilisez la commande :
+
+```bash
+make clean
+```
