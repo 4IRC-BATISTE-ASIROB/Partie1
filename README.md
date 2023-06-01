@@ -1,25 +1,46 @@
-# Partie 1 - Approches basiques
+# Application Client-Serveur en C
 
-## Batiste Laloi
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Serveur
+    Client->>Serveur: Connexion (état = ON)
+    Serveur-->>Client: "Connected to server"
+    loop Tant que le client est connecté
+        Client->>Serveur: Envoi de message ('s' appuyé)
+        Serveur-->>Client: Affichage du message
+        alt 'x' appuyé
+            Client->>Serveur: Envoi du message "DISCONNECT"
+            Note over Serveur: Le client est déconnecté
+        end
+    end
+```
 
-### Les problématiques :
+Cette application est une simple implémentation d'un serveur et d'un client en C utilisant les sockets UDP. Le client peut envoyer des messages au serveur, qui les affiche. Le client peut également se déconnecter du serveur en envoyant un message spécial.
 
-- Remonter les informations de contrôle (start/stop sur un équipement)
-- Remonter d'information sporadique (appuie bumper)
-- Remonter de flux d'information (flux vidéo, flux audio)
+## Structure du Programme
 
-### Enoncé : 
+Le programme est divisé en deux fichiers :
 
-Montrer comment on peut répondre aux problématiques avec une approche à base de :
-- UDP
-- TCP
+- `server.c` : Le code du serveur. Il crée un socket et écoute les messages entrants. Quand il reçoit un message d'un client, il l'affiche. Si le message est "DISCONNECT", le serveur considère que le client s'est déconnecté.
+- `client.c` : Le code du client. Il crée un socket et envoie un message au serveur pour établir la connexion. Il peut ensuite envoyer des messages au serveur en appuyant sur une touche. Si l'utilisateur appuie sur 'x', le client envoie un message de déconnexion au serveur et se ferme.
 
-Faites un comparatif, proposer des codes permettant d’envoyer des données (remonté capteur et informations de contrôle) et permettant le transfert d’images. Concernant les images, on se posera aussi la question de la mise en place de traitement et de mise en chaine de ces différents traitements. Tout cela sous forme de README(s) (markdown) et de code d’exemples sur github
+## Interactions Réseaux
 
-#### UDP : 
+Le programme utilise le protocole UDP pour les communications réseau. Les messages sont envoyés en clair sans aucun cryptage ou autre forme de sécurisation.
 
-Je vais utiliser le langage de programmation C pour réaliser les codes.
+Voici une description de chaque interaction réseau :
 
-##### Remonter les informations de contrôle (start/stop sur un équipement) :
+- Quand le client démarre, il envoie un message au serveur pour indiquer qu'il est connecté.
+- Le serveur reçoit ce message et envoie une réponse au client.
+- Le client peut ensuite envoyer des messages au serveur en appuyant sur la touche 's'.
+- Le serveur affiche chaque message reçu.
+- Si le client envoie le message "DISCONNECT", le serveur considère que le client s'est déconnecté.
 
-###### Client :
+## Utilisation de l'Application
+
+Pour utiliser l'application, vous devez d'abord compiler les deux fichiers. Vous pouvez le faire avec la commande `gcc` comme suit :
+
+```bash
+gcc -o server server.c
+gcc -o client client.c
